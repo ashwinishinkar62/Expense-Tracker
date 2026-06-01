@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    
+    <title>Django Expense Tracker</title>
+    <style>
+
+    @import url('https://fonts.googleapis.com/css?family=Lato:wght@300;400;700&display=swap');
+
+    *{
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body{
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        font-family: 'Lato', sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #333;
+        padding: 20px;
+    }
+
+    .container{
+        background: #fff;
+        width: 100%;
+        max-width: 950px;
+        padding: 30px;
+        border-radius: 18px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    h2{
+        color: white;
+        font-size: 32px;
+        letter-spacing: 1px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    h3{
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
+        margin: 25px 0 15px;
+        color: #444;
+    }
+
+    h4{
+        margin-bottom: 10px;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    #Balance{
+        font-size: 32px;
+        margin-bottom: 15px;
+        color: #222;
+        font-weight: bold;
+    }
+
+    .inc-exp-container{
+        background: #f8f9ff;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        margin: 15px 0;
+        border-radius: 12px;
+    }
+
+    .inc-exp-container div{
+        flex: 1;
+        text-align: center;
+    }
+
+    .inc-exp-container div:first-of-type{
+        border-right: 2px solid #ddd;
+    }
+
+    .money{
+        font-size: 22px;
+        margin-top: 5px;
+        font-weight: bold;
+    }
+
+    .plus{
+        color: #2ecc71;
+    }
+
+    .minus{
+        color: #e74c3c;
+    }
+
+    .list{
+        list-style-type: none;
+        max-height: 250px;
+        overflow-y: auto;
+        margin-bottom: 15px;
+        padding-right: 5px;
+    }
+
+    .list li{
+        background: #fff;
+        color: #333;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 15px;
+        margin: 10px 0;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        position: relative;
+        transition: 0.3s ease;
+    }
+
+    .list li:hover{
+        transform: translateY(-2px);
+    }
+
+    .list li.plus{
+        border-right: 6px solid #2ecc71;
+    }
+
+    .list li.minus{
+        border-right: 6px solid #e74c3c;
+    }
+
+    .delete-btn{
+        cursor: pointer;
+        background: #ff4d4d;
+        border: none;
+        color: #fff;
+        font-size: 16px;
+        line-height: 20px;
+        padding: 5px 10px;
+        border-radius: 8px;
+        opacity: 0;
+        transition: 0.3s ease;
+    }
+
+    .list li:hover .delete-btn{
+        opacity: 1;
+    }
+
+    .form-control{
+        margin: 15px 0;
+    }
+
+    .form-control label{
+        display: inline-block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #555;
+    }
+
+    .form-control input{
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        display: block;
+        width: 100%;
+        padding: 8px 12px;
+        font-size: 14px;
+        transition: 0.3s ease;
+    }
+
+    .form-control input:focus{
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 8px rgba(102,126,234,0.4);
+    }
+
+    .btn{
+        cursor: pointer;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: #fff;
+        border: none;
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-top: 15px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        
+    }
+
+    .logout-btn{
+        background: #2c3e50;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .logout-btn:hover{
+        background: #c0392b;
+    }
+    .btn:hover{
+        transform: scale(1.03);
+        box-shadow: 0 8px 20px rgba(102,126,234,0.4);
+    }
+
+    .btn:active{
+        transform: scale(0.98);
+    }
+
+    /* Scrollbar */
+    .list::-webkit-scrollbar{
+        width: 6px;
+    }
+
+    .list::-webkit-scrollbar-thumb{
+        background: #bbb;
+        border-radius: 10px;
+    }
+
+    .list::-webkit-scrollbar-thumb:hover{
+        background: #888;
+    }
+
+     select{
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .filter-section{
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    /* Responsive */
+    @media(max-width: 768px){
+        .container{
+            grid-template-columns: 1fr;
+        }
+
+        h2{
+            font-size: 28px;
+            text-align: center;
+        }
+
+        #Balance{
+            font-size: 32px;
+        }
+    }
+
+   
+    </style>
+</head>
+<body>
+
+    {% block start %}
+    
+    {% endblock %}
+</body>
+</html>
