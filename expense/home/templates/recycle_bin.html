@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block start %}
+
+<div class="container">
+    <div class="recycle-header">
+        <h2>🗑️ Recycle Bin</h2>
+        <a href="{% url 'home' %}" class="back-link">⬅Back</a>
+    </div>
+
+    {% if expenses %}
+
+        <ul class="list">
+
+        {% for expense in expenses %}
+
+            <li>
+
+                <div>
+                    {{ expense.name }}
+                    ({{ expense.category }})
+                    <br>
+                    <small>{{ expense.date }}</small>
+                </div>
+
+                <div>
+
+                    ₹{{ expense.amount }}
+
+                    <a href="{% url 'restore_expense' expense.id %}" class="btn btn-success text-white text-decoration">
+                             ♻️ Restore
+            
+                    </a>
+
+                </div>
+
+            </li>
+
+        {% endfor %}
+
+        </ul>
+
+    {% else %}
+
+        <div class="empty-state">
+
+            <h3>🗑️ Recycle Bin is Empty</h3>
+
+            <p>No deleted transactions found.</p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

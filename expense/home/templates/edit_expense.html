@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block start %}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height:90vh;">
+
+    <div class="card shadow-lg p-4 rounded-4" style="max-width:450px; width:100%;">
+
+        <h3 class="text-center mb-4">✏️ Edit Transaction</h3>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">Text</label>
+                <input type="text"
+                       name="text"
+                       value="{{ expense.name }}"
+                       class="form-control"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Amount</label>
+                <input type="number"
+                       name="amount"
+                       value="{{ expense.amount }}"
+                       class="form-control"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Type</label>
+                <select name="expense_type" class="form-control" required>
+
+                    <option value="Positive"
+                        {% if expense.expense_type == 'Positive' %}selected{% endif %}>
+                        Positive
+                    </option>
+
+                    <option value="Negative"
+                        {% if expense.expense_type == 'Negative' %}selected{% endif %}>
+                        Negative
+                    </option>
+
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Category</label>
+                <select name="category" class="form-control" required>
+
+                    <option value="Food" {% if expense.category == 'Food' %}selected{% endif %}>Food</option>
+                    <option value="Travel" {% if expense.category == 'Travel' %}selected{% endif %}>Travel</option>
+                    <option value="Shopping" {% if expense.category == 'Shopping' %}selected{% endif %}>Shopping</option>
+                    <option value="Education" {% if expense.category == 'Education' %}selected{% endif %}>Education</option>
+                    <option value="Salary" {% if expense.category == 'Salary' %}selected{% endif %}>Salary</option>
+                    <option value="Other" {% if expense.category == 'Other' %}selected{% endif %}>Other</option>
+
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">
+                💾 Update Transaction
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+{% endblock %}
